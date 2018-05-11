@@ -1,0 +1,33 @@
+{
+  "presets": [
+    "@babel/preset-react", 
+    [
+      "@babel/preset-env", 
+      { 
+        "targets": {
+          "browsers": "> 5%"
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "Shared": "./src/shared"
+        }
+      }
+    ],
+    "react-hot-loader/babel",
+    ["react-css-modules", {
+      "webpackHotModuleReloading": true,
+      "generateScopedName": "[path][name]__[local]--[hash:base64:5]",
+      "filetypes": {
+        ".scss": {
+          "syntax": "postcss-scss"
+        }
+      }
+    }]
+  ]
+}
