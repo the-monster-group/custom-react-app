@@ -5,9 +5,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = (env, argv) => ({
-  entry: [
-    './src/index.js'
-  ],
+  entry: {
+    app: './src/index.js'
+  },
   module: {
     rules: [
       { //scripts
@@ -26,7 +26,7 @@ module.exports = (env, argv) => ({
               limit: 8192,
               name: '[name].[ext]',
               outputPath: 'assets/images/',
-              publicPath: '../images/'
+              publicPath: argv.mode === 'development' ? '' : '../images/'
             }
           }
         ]
@@ -40,7 +40,7 @@ module.exports = (env, argv) => ({
               limit: 8192,
               name: '[name].[ext]',
               outputPath: 'assets/fonts/',
-              publicPath: '../fonts/'
+              publicPath: argv.mode === 'development' ? '' : '../fonts/'
             }
           }
         ]
@@ -80,13 +80,24 @@ module.exports = (env, argv) => ({
   },
   output: {
     path: __dirname + '/dist',
-    filename: 'assets/scripts/bundle.js'
+    filename: 'assets/scripts/[name].js',
+    chunkFilename: 'assets/scripts/[id].js'
   },
   devServer: {
     historyApiFallback: true,
     contentBase: './dist'
   },
   optimization: {
+    splitChunks: {
+      cacheGroups: {
+        extractVendorsStyles: {
+          test: /vendors\.s?css$/,
+          name: "vendors",
+          chunks: "all",
+          enforce: false
+        }
+      }
+    },
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
@@ -99,7 +110,7 @@ module.exports = (env, argv) => ({
   plugins: [
     new MiniCssExtractPlugin({
       filename: "assets/styles/[name].css",
-      chunkFilename: "assets/styles/[id].css"
+      chunkFilename: "assets/styles/[name].css"
     }),
     new HtmlWebpackPlugin({
       title: 'My App',
