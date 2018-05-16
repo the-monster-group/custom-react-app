@@ -1,0 +1,11 @@
+@import '~Brand/variables';
+
+.bleu {
+  background: yellowgreen;
+  height: 200px;
+  background-image: url('../../images/dom&jquery.png');
+}
+
+.text-color {
+  color: $brand-color;
+}

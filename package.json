@@ -2,16 +2,19 @@
   "name": "custom-react-app",
   "version": "0.0.1",
   "scripts": {
-    "dev": "webpack-dev-server --hot --mode development",
+    "dev": "BRAND=${BRAND:=acom} webpack-dev-server --hot --mode development",
     "clean": "rm -rf dist/*",
-    "build": "npm run clean && webpack --mode production",
+    "build": "npm run clean && BRAND=${BRAND:=acom} webpack --mode production",
+    "acom": "BRAND=acom webpack --mode production",
+    "suba": "BRAND=suba webpack --mode production",
+    "shop": "BRAND=shop webpack --mode production",
+    "build-all": "npm run clean && npm run suba && npm run acom && npm run shop",
     "test": ""
   },
   "dependencies": {
     "babel-plugin-react-css-modules": "^3.4.0",
     "bootstrap": "^4.1.1",
     "feather": "^1.21.1",
-    "handlebars-loader": "^1.7.0",
     "history": "^4.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

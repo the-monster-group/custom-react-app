@@ -8,6 +8,11 @@ module.exports = (env, argv) => ({
   entry: {
     app: './src/index.js'
   },
+  resolve: {
+    alias: {
+      Brand: __dirname + '/src/' + process.env.BRAND + '/'
+    }
+  },
   module: {
     rules: [
       { //scripts
@@ -79,13 +84,13 @@ module.exports = (env, argv) => ({
     ]
   },
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '/dist/' + process.env.BRAND,
     filename: 'assets/scripts/[name].js',
     chunkFilename: 'assets/scripts/[id].js'
   },
   devServer: {
     historyApiFallback: true,
-    contentBase: './dist'
+    contentBase: './dist/' + process.env.BRAND
   },
   optimization: {
     splitChunks: {
@@ -108,13 +113,14 @@ module.exports = (env, argv) => ({
     ]
   },
   plugins: [
+    new webpack.EnvironmentPlugin(['BRAND']),
     new MiniCssExtractPlugin({
       filename: "assets/styles/[name].css",
       chunkFilename: "assets/styles/[name].css"
     }),
     new HtmlWebpackPlugin({
       title: 'My App',
-      filename: __dirname + '/dist/index.html'
+      filename: __dirname + '/dist/' + process.env.BRAND + '/index.html'
     })
   ]
 });
