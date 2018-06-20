@@ -14,7 +14,6 @@
   "dependencies": {
     "babel-plugin-react-css-modules": "^3.4.0",
     "bootstrap": "^4.1.1",
-    "feather": "^1.21.1",
     "history": "^4.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
